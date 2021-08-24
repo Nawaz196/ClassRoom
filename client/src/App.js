@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Calendar from "../src/components/Calendar"
+import Calendar from "../src/components/calendar/Calendar"
 
 function App() {
   return (

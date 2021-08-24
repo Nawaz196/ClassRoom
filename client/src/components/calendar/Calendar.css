@@ -1,0 +1,8 @@
+.monthContainer{
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:flex-start;
+    width: 92%;
+}
