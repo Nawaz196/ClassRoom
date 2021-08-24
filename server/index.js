@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const {MONGO_URI} = require("./keys");
+const {MONGO_URI} = require("./config/keys");
+const authRoute = require('./Routes/auth')
 
 mongoose
   .connect(MONGO_URI, {
@@ -13,6 +14,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(express.json());
+app.use("/api/auth",authRoute)
 
 app.listen(9000, () => {
     console.log("backend server is running!");
