@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const router = express.Router()
 const Student = require('../Models/student')
 const Teacher = require('../Models/teacher')
+const Admin = require("../Models/admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require('../config/keys')
+
+//Student Sign-Up
 
 router.post("/studentsignup", (req, res) => {
     const { name, email, password} = req.body;
@@ -40,10 +43,12 @@ router.post("/studentsignup", (req, res) => {
       });
   });
 
+//Teacher Sign-Up
+
 router.post("/teachersignup", (req, res) => {
     const { name, email, password} = req.body;
     if (!password || !email || !name) {
-      res.json({ error: "please add all the fields" });
+      res.json({ error: "Please add all the fields" });
     }
     Teacher.findOne({ email: email })
       .then((savedTeacher) => {
@@ -72,6 +77,8 @@ router.post("/teachersignup", (req, res) => {
         console.log(err);
       });
   });
+
+//Student Sign-In
 
   router.post("/studentsignin", (req, res) => {
     const { email, password } = req.body;
@@ -106,6 +113,8 @@ router.post("/teachersignup", (req, res) => {
       });
   });
 
+//Teacher Sign-In
+
   router.post("/teachersignin", (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -138,5 +147,73 @@ router.post("/teachersignup", (req, res) => {
         console.error(err);
       });
   });
+
+//Admin Sign-In
+
+  router.post("/adminsignin", (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(422).json({ error: "Please add email or password" });
+    }
+    Admin.findOne({ email: email })
+      .then((savedAdmin) => {
+        if (!savedAdmin) {
+          return res.status(422).json({ error: "Invalid email or password " });
+        }
+        bcrypt
+          .compare(password, savedAdmin.password)
+          .then((doMatch) => {
+            if (doMatch) {
+              /* res.json({ message: "Sucessfully signed in" }); */
+              const token = jwt.sign({ _id: savedAdmin._id }, JWT_SECRET);
+              const { _id, email } = savedAdmin;
+              res.json({ token, user: { _id,email} });
+            } else {
+              return res
+                .status(422)
+                .json({ error: "Invalid email or password " });
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+
+  router.post("/adminsignup", (req, res) => {
+    const { email, password} = req.body;
+    if (!password || !email) {
+      res.json({ error: "please add all the fields" });
+    }
+    Admin.findOne({ email: email })
+      .then((savedAdmin) => {
+        if (savedAdmin) {
+          return res
+            .status(422)
+            .json({ error: "User already exists with this email" });
+        }
+        bcrypt.hash(password, 12).then((hashedPassword) => {
+          const admin = new Admin({
+            email,
+            password: hashedPassword,
+          });
+          admin
+            .save()
+            .then((admin) => {
+              res.json({ message: "Saved Successfully" , admin });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
 
   module.exports = router;
