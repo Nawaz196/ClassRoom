@@ -7,11 +7,21 @@ const TeacherSignIn = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  const handlesubmit = async () => {
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const res = await axios.get("/auth/teachersignin");
-    } catch (error) {}
+      // console.log(email);
+      // console.log(password);
+      const res = await axios.post("/api/auth/teachersignin", {
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div>
       <h4> ClassRoom</h4>
