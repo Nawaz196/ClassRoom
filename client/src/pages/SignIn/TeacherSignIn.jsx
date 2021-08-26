@@ -8,15 +8,20 @@ const TeacherSignIn = () => {
   const history = useHistory();
 
   const handlesubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault()
     try {
-      // console.log(email);
-      // console.log(password);
       const res = await axios.post("/api/auth/teachersignin", {
         email,
         password,
-      });
+      })
+      const data= res.data
+      if(data.error){
+        alert(data.error)
+      }else{
+        localStorage.setItem("jwt",data.token)
+        localStorage.setItem("user",JSON.stringify(data.user))
+        history.push("/")
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +49,7 @@ const TeacherSignIn = () => {
         />
         <button type="submit"> Submit</button>
       </form>
+      
     </div>
   );
 };

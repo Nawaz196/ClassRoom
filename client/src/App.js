@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import TeacherSignIn from "./pages/SignIn/TeacherSignIn";
 import StudentSignIn from "./pages/SignIn/StudentSignIn";
+import TeacherSignUp from "./pages/SignIn/TeacherSignUp";
+import StudentSignUp from "./pages/SignIn/StudentSignUp"
 
 function App() {
   return (
@@ -21,8 +23,14 @@ function App() {
         <Route path="/teachersignin">
           <TeacherSignIn />
         </Route>
+        <Route path="/teachersignup">
+          <TeacherSignUp/>
+        </Route>
         <Route path="/studentsignin">
           <StudentSignIn />
+        </Route>
+        <Route path="/studentsignup">
+          <StudentSignUp/>
         </Route>
       </Switch>
     </Router>

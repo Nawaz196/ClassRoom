@@ -11,8 +11,8 @@ const {JWT_SECRET} = require('../config/keys')
 //Student Sign-Up
 
 router.post("/studentsignup", (req, res) => {
-    const { name, email, password} = req.body;
-    if (!password || !email || !name) {
+    const { name, email, password, branch} = req.body;
+    if (!password || !email || !name || !branch) {
       res.json({ error: "please add all the fields" });
     }
     Student.findOne({ email: email })
@@ -26,6 +26,7 @@ router.post("/studentsignup", (req, res) => {
           const student = new Student({
             name,
             email,
+            branch,
             password: hashedPassword,
           });
           student
