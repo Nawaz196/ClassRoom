@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
+import "./SignIn.css";
 
 const TeacherSignUp = () => {
   const [name, setName] = useState("");
@@ -39,35 +40,46 @@ const TeacherSignUp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <label>Name </label>{" "}
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label>Email </label>{" "}
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label>Password</label>{" "}
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <label>Branch </label>
-        <select value={branch} onChange={(e) => setBranch(e.target.value)}>
-        <option value="">Select Branch</option>
-          <option value="CSE">CSE</option>
-          <option value="CE">CE</option>
-          <option value="IT">IT</option>
-        </select>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="signinPage">
+      <div className="signinBox">
+        <h4>Student SignUp</h4>
+        <form onSubmit={submit} className="signinForm">
+          <input
+            className="inputFields"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+          <input
+            className="inputFields"
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+          <input
+            className="inputFields"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <select className="selectInputFields" value={branch} onChange={(e) => setBranch(e.target.value)}>
+            <option value="">Select Branch</option>
+            <option value="CSE">CSE</option>
+            <option value="CE">CE</option>
+            <option value="IT">IT</option>
+          </select>
+          <button className="button" type="submit">Submit</button>
+        </form>
+        <span style={{ color: "grey" }}>
+          Already have an Account?&nbsp; 
+          <Link style={{color: "#1565c0"}} className="signinLink" to="/studentsignin">
+            Sign In
+          </Link>
+        </span>
+      </div>
     </div>
   );
 };

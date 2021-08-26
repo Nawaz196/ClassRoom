@@ -1,6 +1,9 @@
 .landingPage {
+  margin: 0;
   display: flex;
   width: 100%;
+  height: 100vh;
+  background-color: #efefef;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
@@ -12,13 +15,33 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
   align-items: center;
-  border: 1px solid grey;
-  border-radius: 5px;
-  margin: 10px;
+  border-radius: 10px;
+  margin: 50px;
+  box-shadow: 0px 0px 15px 3px rgba(143,143,143,1);
   height: 400px;
 }
 
 .containerBoxImage {
   width: 60%;
+}
+
+.landingPageLink {
+  text-decoration: none;
+  color: white;
+}
+
+.landingPageButton {
+  margin: 30px;
+  padding: 20px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  background-color: #0277bd;
+  border-style: none;
+  transition: background-color 0.3s;
+}
+
+.landingPageButton:hover {
+  background-color: #0288d1;
 }

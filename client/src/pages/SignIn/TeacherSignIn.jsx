@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import "./SignIn.css";
 
 const TeacherSignIn = () => {
   const [email, setEmail] = useState("");
@@ -8,19 +10,19 @@ const TeacherSignIn = () => {
   const history = useHistory();
 
   const handlesubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await axios.post("/api/auth/teachersignin", {
         email,
         password,
-      })
-      const data= res.data
-      if(data.error){
-        alert(data.error)
-      }else{
-        localStorage.setItem("jwt",data.token)
-        localStorage.setItem("user",JSON.stringify(data.user))
-        history.push("/")
+      });
+      const data = res.data;
+      if (data.error) {
+        alert(data.error);
+      } else {
+        localStorage.setItem("jwt", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        history.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -28,28 +30,34 @@ const TeacherSignIn = () => {
   };
 
   return (
-    <div>
-      <h4> ClassRoom</h4>
-      <form onSubmit={handlesubmit}>
-        <label>Username : </label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <label>Password : </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <button type="submit"> Submit</button>
-      </form>
-      
+    <div className="signinPage">
+      <div className="signinBox">
+        <h4> Teacher Login</h4>
+        <form onSubmit={handlesubmit} className="signinForm">
+          <input
+            className="inputFields"
+            type="text"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Email"
+          />
+          <input
+            className="inputFields"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="Password"
+          />
+          <button className="button" type="submit">
+            Submit
+          </button>
+        </form>
+        <Link className="signinLink" to="/teachersignup">Don't have an account?</Link>
+      </div>
     </div>
   );
 };

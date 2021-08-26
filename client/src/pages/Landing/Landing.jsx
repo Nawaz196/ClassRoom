@@ -11,15 +11,15 @@ function Landing() {
           src="https://freepikpsd.com/media/2019/10/teacher-png-3-Transparent-Images.png"
           alt=""
         />
-        <button> <Link to = "/teachersignin">For Teachers</Link> </button>
+        <button className="landingPageButton"> <Link className="landingPageLink" to = "/teachersignin">For Teachers</Link> </button>
       </div>
       <div className="containerBox">
         <img
           className="containerBoxImage"
-          src="https://www.pngitem.com/pimgs/m/81-813934_transparent-student-uniform-clipart-school-student-vector-png.png"
+          src="https://cdn.imgbin.com/6/12/8/imgbin-student-hello-boy-carries-the-package-wzLVkK5nwnvBiNtuRmr52sr6e.jpg"
           alt=""
         />
-        <button> <Link to = "/studentsignin">For Student</Link> </button>
+        <button className="landingPageButton"> <Link className="landingPageLink" to = "/studentsignin">For Students</Link> </button>
       </div>
     </div>
   );
