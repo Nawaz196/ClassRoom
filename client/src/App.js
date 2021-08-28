@@ -11,7 +11,7 @@ import {
 import TeacherSignIn from "./pages/SignIn/TeacherSignIn";
 import StudentSignIn from "./pages/SignIn/StudentSignIn";
 import TeacherSignUp from "./pages/SignIn/TeacherSignUp";
-import StudentSignUp from "./pages/SignIn/StudentSignUp"
+import StudentSignUp from "./pages/SignIn/StudentSignUp";
 
 function App() {
   return (
@@ -24,13 +24,16 @@ function App() {
           <TeacherSignIn />
         </Route>
         <Route path="/teachersignup">
-          <TeacherSignUp/>
+          <TeacherSignUp />
         </Route>
         <Route path="/studentsignin">
           <StudentSignIn />
         </Route>
         <Route path="/studentsignup">
-          <StudentSignUp/>
+          <StudentSignUp />
+        </Route>
+        <Route path="/studentcalendar">
+          <Calendar />
         </Route>
       </Switch>
     </Router>

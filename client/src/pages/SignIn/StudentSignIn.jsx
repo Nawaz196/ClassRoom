@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
-
 const StudentSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +20,7 @@ const StudentSignIn = () => {
       } else {
         localStorage.setItem("jwt", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        history.push("/");
+        history.push("/studentcalendar");
       }
     } catch (error) {
       console.log(error);
@@ -55,7 +54,9 @@ const StudentSignIn = () => {
             Submit
           </button>
         </form>
-        <Link className="signinLink" to="/studentsignup">Don't have an account?</Link>
+        <Link className="signinLink" to="/studentsignup">
+          Don't have an account?
+        </Link>
       </div>
     </div>
   );
