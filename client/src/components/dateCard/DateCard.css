@@ -2,10 +2,11 @@
     margin: 1px;
     width : 13%;
     border: 1px solid grey;
-    border-radius: 3px;
+    border-radius: 5px;
     overflow: hidden;
     padding: 5px;
     height: 150px;
+    background-color: white;
   }
   
   .info{

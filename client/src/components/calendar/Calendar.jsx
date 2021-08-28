@@ -4,7 +4,7 @@ import "./Calendar.css";
 import DaysCard from "./DaysCard";
 
 const Calendar = () => {
-  const [selectMonth, setSelectMonth] = useState();
+  const [selectMonth, setSelectMonth] = useState(new Date().getMonth()+1);
   function getDay(K, M, D, C) {
     let daynumber =
       K +
@@ -72,10 +72,11 @@ const Calendar = () => {
   };
 
   return (
-    <div>
+    <div className="calendarPage">
       <h1>The Student Calendar is here bitches!</h1>
 
       <select
+        className="monthSelect"
         value={selectMonth}
         onChange={(e) => {
           setSelectMonth(e.target.value);
