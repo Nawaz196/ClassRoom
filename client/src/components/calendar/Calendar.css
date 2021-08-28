@@ -23,4 +23,18 @@
     box-shadow: 0 0 10px rgb(206, 206, 241) ;
     outline: none;
     border-style: none;
+    text-align: center;
 }
+
+.calendarIcon{
+    margin-right: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.calendarPage select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+  }

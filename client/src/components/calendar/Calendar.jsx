@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import DateCard from "../dateCard/DateCard";
 import "./Calendar.css";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import DaysCard from "./DaysCard";
 
 const Calendar = () => {
-  const [selectMonth, setSelectMonth] = useState(new Date().getMonth()+1);
+  const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   function getDay(K, M, D, C) {
     let daynumber =
       K +
@@ -75,27 +76,45 @@ const Calendar = () => {
     <div className="calendarPage">
       <h1>The Student Calendar is here bitches!</h1>
 
-      <select
-        className="monthSelect"
-        value={selectMonth}
-        onChange={(e) => {
-          setSelectMonth(e.target.value);
-        }}
-      >
-        <option value="">Choose Month</option>
-        <option value={1}>January</option>
-        <option value={2}>February</option>
-        <option value={3}>March</option>
-        <option value={4}>April</option>
-        <option value={5}>May</option>
-        <option value={6}>June</option>
-        <option value={7}>July</option>
-        <option value={8}>August</option>
-        <option value={9}>September</option>
-        <option value={10}>October</option>
-        <option value={11}>November</option>
-        <option value={12}>December</option>
-      </select>
+      <div>
+        <BsChevronLeft
+          className="calendarIcon"
+          onClick={(e) => {
+            selectMonth > 1
+              ? setSelectMonth(selectMonth - 1)
+              : setSelectMonth(1);
+          }}
+        />
+        <select
+          className="monthSelect"
+          value={selectMonth}
+          onChange={(e) => {
+            setSelectMonth(e.target.value);
+          }}
+        >
+          <option value="">Choose Month</option>
+          <option value={1}>January</option>
+          <option value={2}>February</option>
+          <option value={3}>March</option>
+          <option value={4}>April</option>
+          <option value={5}>May</option>
+          <option value={6}>June</option>
+          <option value={7}>July</option>
+          <option value={8}>August</option>
+          <option value={9}>September</option>
+          <option value={10}>October</option>
+          <option value={11}>November</option>
+          <option value={12}>December</option>
+        </select>
+        <BsChevronRight
+          className="calendarIcon"
+          onClick={(e) => {
+            selectMonth < 12
+              ? setSelectMonth(selectMonth + 1)
+              : setSelectMonth(12);
+          }}
+        />
+      </div>
 
       <div className="monthContainer">
         {day.map((e) => {

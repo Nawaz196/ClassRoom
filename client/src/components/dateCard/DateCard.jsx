@@ -6,7 +6,7 @@ function DateCard({month,date}) {
 
     return (
         <div className="card" >
-            <p>{month } {date}</p>
+            <p style={{textAlign :"center"}} >{/* {month }  */}{date}</p>
 
 
         <div className="info">            
