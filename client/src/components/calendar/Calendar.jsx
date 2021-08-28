@@ -13,12 +13,18 @@ const Calendar = () => {
       Math.floor(D / 4) +
       Math.floor(C / 4) -
       2 * C;
-    //return daynumber;
-    console.log(daynumber);
-    //return daynumber > 0 ? daynumber +1: 7;
-    //let ans = daynumber % 7;
-    // if (ans === 0) ans = 6;
-    // return ans+1;
+
+    if (M === 11 || M === 12) {
+      return (daynumber % 7) - 1;
+    } else if (M === 1 || M === 2 || M === 3) {
+      return daynumber + 7;
+    } else if (M === 4 || M === 5) {
+      return daynumber;
+    } else if (M === 6 || M === 7 || M === 8) {
+      return daynumber - 7;
+    } else {
+      return daynumber - 14;
+    }
   }
   function daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
@@ -30,14 +36,12 @@ const Calendar = () => {
   for (let i = 0; i < days; i++) {
     arr.push(i + 1);
   }
-
   let particular_day = getDay(
     1,
     selectMonth - 2 > 0 ? selectMonth - 2 : selectMonth - 2 === -1 ? 11 : 12,
     21,
     20
   );
-  //console.log(particular_day);
   let array = [];
   for (let i = 0; i < particular_day - 1; i++) {
     array.push(i + 1);
