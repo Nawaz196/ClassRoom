@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -10,35 +11,32 @@ const StudentSignIn = () => {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    if(!email || !password){
-      console.log("Enter all the fields")
-      // toast.warn("Enter all the fields.", { autoClose: 2000 });
-      
-    }
-    else if (
+    if (!email || !password) {
+      toast.warn("Enter all the fields !");
+    } else if (
       !/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         email
       )
     ) {
-      // return toast.warn("Enter all the fields.", { autoClose: 2000 });
-    }
-    else
-    try {
-      const res = await axios.post("/api/auth/studentsignin", {
-        email,
-        password,
-      });
-      const data = res.data;
-      if (data.error) {
-          console.log(data.error)
-      } else {
-        localStorage.setItem("jwt", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        history.push("/studentcalendar");
+      toast.warn("Invalid Email !")
+    } else
+      try {
+        const res = await axios.post("/api/auth/studentsignin", {
+          email,
+          password,
+        });
+        const data = res.data;
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          history.push("/studentcalendar");
+          toast.success("Signned In ")
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -72,6 +70,17 @@ const StudentSignIn = () => {
           Don't have an account?
         </Link>
       </div>
+      <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
     </div>
   );
 };

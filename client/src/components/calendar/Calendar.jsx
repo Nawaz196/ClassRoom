@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import DateCard from "../dateCard/DateCard";
 import "./Calendar.css";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
@@ -163,6 +164,17 @@ const Calendar = () => {
           return <DateCard month={selectMonth} date={e} />;
         })}
       </div>
+      <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
     </div>
   );
 };
