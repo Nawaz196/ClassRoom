@@ -1,12 +1,15 @@
 import React from 'react'
 import './DateCard.css'
 
-function DateCard({month,date}) {
 
+function DateCard({month,date}) {
+const presentDate = new Date().getDate()
+const presentMonth = new Date().getMonth()+1
+// const [presentYear, setPresentYear] = useState(new Date().getFullYear())
 
     return (
         <div className="card" >
-            <p style={{textAlign :"center"}} >{/* {month }  */}{date}</p>
+            <p className={( presentMonth===month && date===presentDate)?"presentDay":"normalDay"} >{date}</p>
 
 
         <div className="info">            

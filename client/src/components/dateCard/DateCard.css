@@ -19,6 +19,17 @@
     transition: transform 0.3s ease-in-out;
     opacity: 0;
   }
+
+  .normalDay{
+    text-align: center;
+    
+  }
+
+  .presentDay{
+    text-align: center;
+    color: white;
+    background-color: red;
+  }
   
   .card:hover .info{
    opacity: 1;

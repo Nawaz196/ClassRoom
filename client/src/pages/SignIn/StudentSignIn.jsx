@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,6 +10,19 @@ const StudentSignIn = () => {
 
   const handlesubmit = async (e) => {
     e.preventDefault();
+    if(!email || !password){
+      console.log("Enter all the fields")
+      // toast.warn("Enter all the fields.", { autoClose: 2000 });
+      
+    }
+    else if (
+      !/^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      // return toast.warn("Enter all the fields.", { autoClose: 2000 });
+    }
+    else
     try {
       const res = await axios.post("/api/auth/studentsignin", {
         email,
@@ -16,7 +30,7 @@ const StudentSignIn = () => {
       });
       const data = res.data;
       if (data.error) {
-        alert(data.error);
+          console.log(data.error)
       } else {
         localStorage.setItem("jwt", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
