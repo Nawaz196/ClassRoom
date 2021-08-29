@@ -72,7 +72,6 @@ const Calendar = () => {
 
   return (
     <div className="calendarPage">
-      <h1>The Student Calendar is here bitches!</h1>
 
       <div
         style={{ width: "500px", display: "flex", justifyContent: "center" }}

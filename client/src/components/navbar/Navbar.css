@@ -1,0 +1,20 @@
+.navbar {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(224, 224, 240);
+}
+
+.button {
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    background-color: rgb(187, 31, 31);
+    border-style: none;
+    transition: background-color 0.3s;
+    color: white;
+    width: 100px;
+    cursor: pointer;
+}

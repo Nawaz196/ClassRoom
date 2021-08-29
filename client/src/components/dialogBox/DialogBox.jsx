@@ -55,12 +55,8 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-const DialogBox = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+const DialogBox = ({ isOpen }) => {
+  const [open, setOpen] = useState(isOpen);
   const handleClose = () => {
     setOpen(false);
   };
@@ -72,9 +68,17 @@ const DialogBox = () => {
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          Your Day
         </DialogTitle>
-        <DialogContent dividers></DialogContent>
+        <DialogContent dividers>
+          <h4>Time Table</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
+            voluptate sequi dignissimos voluptatem! Illum harum quisquam
+            doloribus temporibus ut delectus quae laborum obcaecati modi
+            reprehenderit amet accusantium molestiae, est natus.
+          </p>
+        </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
             Save changes

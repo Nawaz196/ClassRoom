@@ -12,10 +12,12 @@ import TeacherSignIn from "./pages/SignIn/TeacherSignIn";
 import StudentSignIn from "./pages/SignIn/StudentSignIn";
 import TeacherSignUp from "./pages/SignIn/TeacherSignUp";
 import StudentSignUp from "./pages/SignIn/StudentSignUp";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/">
           <Landing />

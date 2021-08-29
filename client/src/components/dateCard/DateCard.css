@@ -1,40 +1,37 @@
-.card{
-    margin: 1px;
-    width : 13%;
-    border: 1px solid grey;
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 5px;
-    height: 150px;
-    background-color: white;
-    cursor: pointer;
-  }
-  
-  .info{
-    width: 300px;
-    height: 80px;
-    padding-top: 0px;
-    overflow: hidden;
-    background-color:grey;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
-    opacity: 0;
-  }
+.card {
+  margin: 1px;
+  width: 13%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+  height: 150px;
+  background-color: white;
+  cursor: pointer;
+}
 
-  .normalDay{
-    text-align: center;
-    
-  }
+.info {
+  width: 300px;
+  height: 80px;
+  padding-top: 0px;
+  overflow: hidden;
+  background-color: grey;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+}
 
-  .presentDay{
-    text-align: center;
-    color: white;
-    background-color: red;
-  }
-  
-  .card:hover .info{
-   opacity: 1;
-   transform: translateY(0%);
-  }
-  
-  
+.normalDay {
+  text-align: center;
+}
+
+.presentDay {
+  text-align: center;
+  color: white;
+  background-color: red;
+}
+
+.card:hover .info {
+  opacity: 1;
+  transform: translateY(0%);
+}
