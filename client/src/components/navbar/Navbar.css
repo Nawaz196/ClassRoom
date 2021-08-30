@@ -7,7 +7,11 @@
     background-color: rgb(224, 224, 240);
 }
 
-.button {
+.nobutton{
+    display: none;
+}
+
+.redbutton {
     padding: 10px;
     font-size: 1.2rem;
     border-radius: 10px;

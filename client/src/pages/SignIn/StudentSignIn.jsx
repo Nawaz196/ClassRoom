@@ -18,7 +18,7 @@ const StudentSignIn = () => {
         email
       )
     ) {
-      toast.warn("Invalid Email !")
+      return toast.warn("Invalid Email !")
     } else
       try {
         const res = await axios.post("/api/auth/studentsignin", {

@@ -1,4 +1,6 @@
 import React,{useState} from "react";
+import { BsPencil } from 'react-icons/bs';
+import { SiGoogleclassroom } from 'react-icons/si';
 import "./DateCard.css";
 import DialogBox from "../dialogBox/DialogBox";
 
@@ -11,9 +13,23 @@ function DateCard({ month, date }) {
      e.preventDefault();
      dialogOpen ? setDialogOpen(false) : setDialogOpen(true);
   }
+
+  if(month==="" && date ===""){
+    return(
+      <div className="emptyCard">
+        
+      </div>
+    )
+  }
+  else {
   return (
       <div className="card" onClick={handleClick}>
-        <p
+       <div style={{
+         display:"flex",
+        width:"100%",
+        justifyContent:"center"
+       }} >
+       <p
           className={
             presentMonth === month && date === presentDate
               ? "presentDay"
@@ -22,14 +38,16 @@ function DateCard({ month, date }) {
         >
           {date}
         </p>
+       </div>
 
         <div className="info">
-          <p>2 Assignments</p>
-          <p>3 Classes</p>
+         <h5 style={{color:"#ff8f00"}} ><BsPencil/> &nbsp;2 Assignments</h5>
+          <h5 style={{color:"green"}}><SiGoogleclassroom/> &nbsp;6 Classes</h5>
         </div>
         {dialogOpen && <DialogBox isOpen={dialogOpen}/>}
       </div>
   );
+        }
 }
 
 export default DateCard;

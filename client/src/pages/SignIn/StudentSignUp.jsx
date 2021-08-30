@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import "./SignIn.css";
@@ -17,7 +18,7 @@ const TeacherSignUp = () => {
         email
       )
     ) {
-      return alert("Invalid Email");
+       return toast.warn("Invalid Email")
     }
     try {
       const res = await axios.post("/api/auth/studentsignup", {
@@ -27,11 +28,10 @@ const TeacherSignUp = () => {
         branch,
       });
       const data = res.data;
-      console.log(data);
       if (data.error) {
-        alert(data.error);
+        toast.error(data.error)
       } else {
-        alert("Signup Successfull");
+        toast.success("Signup Successful")
         history.push("/studentsignin");
       }
     } catch (error) {
@@ -80,6 +80,17 @@ const TeacherSignUp = () => {
           </Link>
         </span>
       </div>
+      <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
     </div>
   );
 };

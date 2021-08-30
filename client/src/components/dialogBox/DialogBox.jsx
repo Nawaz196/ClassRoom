@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./DialogBox.css"
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -72,12 +73,43 @@ const DialogBox = ({ isOpen }) => {
         </DialogTitle>
         <DialogContent dividers>
           <h4>Time Table</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            voluptate sequi dignissimos voluptatem! Illum harum quisquam
-            doloribus temporibus ut delectus quae laborum obcaecati modi
-            reprehenderit amet accusantium molestiae, est natus.
-          </p>
+          <table>
+            <tr>
+              <th>Time</th>
+              <th>Subject</th>
+              <th>Teacher</th>
+            </tr>
+            <tr>
+              <td>11:00-12:00</td>
+              <td>Maths</td>
+              <td>D Sharma</td>
+            </tr>
+            <tr>
+              <td>11:00-12:00</td>
+              <td>Maths</td>
+              <td>D Sharma</td>
+            </tr>
+            <tr>
+              <td>11:00-12:00</td>
+              <td>Maths</td>
+              <td>D Sharma</td>
+            </tr>
+            <tr>
+              <td>11:00-12:00</td>
+              <td>Maths</td>
+              <td>D Sharma</td>
+            </tr>
+            <tr>
+              <td>11:00-12:00</td>
+              <td>Maths</td>
+              <td>D Sharma</td>
+            </tr>
+          </table>
+          <h4>Assignments</h4>
+            <ul>
+              <li>Maths</li>
+              <li>Science</li>
+            </ul>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
