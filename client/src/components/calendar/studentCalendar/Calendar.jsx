@@ -1,10 +1,9 @@
 import React, { useState} from "react";
 import { ToastContainer } from "react-toastify";
-import DateCard from "../dateCard/DateCard";
+import DateCard from "../../dateCard/DateCard";
 import "./Calendar.css";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
-import DaysCard from "./DaysCard";
-
+import DaysCard from "../../daysCard/DaysCard"
 
 
 const Calendar = () => {
@@ -156,7 +155,7 @@ const Calendar = () => {
             return <DateCard month="" date="" />;
           })}
           {arr.map((e) => {
-            return <DateCard month={selectMonth} date={e} />;
+            return <DateCard month={selectMonth} date={e} isStudent={true} />;
           })}
         </div>
         <ToastContainer

@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import "./SignIn.css";
 
-const TeacherSignUp = () => {
+const StudentSignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -95,4 +95,4 @@ const TeacherSignUp = () => {
   );
 };
 
-export default TeacherSignUp;
+export default StudentSignUp;

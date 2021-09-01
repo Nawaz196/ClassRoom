@@ -1,12 +1,12 @@
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
-import Calendar from "../src/components/calendar/Calendar";
+import StudentCalendar from "../src/components/calendar/studentCalendar/Calendar";
+import TeacherCalendar from "../src/components/calendar/teacherCalendar/Calendar";
 import Landing from "./pages/Landing/Landing";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
   useHistory,
 } from "react-router-dom";
 import TeacherSignIn from "./pages/SignIn/TeacherSignIn";
@@ -22,11 +22,16 @@ const Routing = () => {
   const history = useHistory();
   const { dispatch } = useContext(UserContext);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      dispatch({ type: "USER", payload: user });
+    const suser = JSON.parse(localStorage.getItem("suser"));
+    const tuser = JSON.parse(localStorage.getItem("tuser"));
+    if (suser) {
+      dispatch({ type: "SUSER", payload: suser });
        history.push('/studentcalendar')
-    } else {
+    } else if (tuser) {
+      dispatch({ type: "TUSER", payload: tuser });
+       history.push('/teachercalendar')
+    }  
+    else {
       history.push("/");
     }
   }, []);
@@ -41,6 +46,9 @@ const Routing = () => {
     <Route path="/teachersignup">
       <TeacherSignUp />
     </Route>
+    <Route path="/teachercalendar">
+      <TeacherCalendar />
+    </Route>
     <Route path="/studentsignin">
       <StudentSignIn />
     </Route>
@@ -48,7 +56,7 @@ const Routing = () => {
       <StudentSignUp />
     </Route>
     <Route path="/studentcalendar">
-      <Calendar />
+      <StudentCalendar />
     </Route>
   </Switch>
   )

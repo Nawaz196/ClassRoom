@@ -1,12 +1,45 @@
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 500px;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    height: 30px;
-  }
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 500px;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  height: 30px;
+}
+
+.inputFields {
+  width: 300px;
+  margin: 20px;
+  outline: none;
+  border-style: none;
+  background-color: #fff;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px 3px rgba(143, 143, 143, 0.5);
+}
+
+
+.selectInputFields {
+  width: 310px;
+  margin: 20px;
+  outline: none;
+  border-style: none;
+  background-color: #fff;
+  height: 48px;
+  font-size: 15px;
+  border-radius: 10px;
+  color: gray;
+  padding: 5px;
+  box-shadow: 0px 0px 5px 3px rgba(143, 143, 143, 0.5);
+}
+
+h4{
+  margin: 20px;
+}

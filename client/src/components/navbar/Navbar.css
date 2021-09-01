@@ -21,4 +21,11 @@
     color: white;
     width: 100px;
     cursor: pointer;
+    margin: 10px;
+}
+
+.addButton {
+    background-color: green;
+    width: 150px;
+    margin: 10px;
 }

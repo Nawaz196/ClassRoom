@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./SignIn.css";
+import {UserContext} from "../../App"
 
 const TeacherSignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const {dispatch} = useContext(UserContext);
+
 
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -29,9 +32,13 @@ const TeacherSignIn = () => {
       toast.error(data.error)
       } else {
         localStorage.setItem("jwt", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("tuser", JSON.stringify(data.user));
         toast.success("Signned In ")
-        history.push("/");
+        history.push("/teachercalendar");
+        dispatch({
+          type: "TUSER",
+          payload: true,
+        });
       }
     } catch (error) {
       console.log(error);

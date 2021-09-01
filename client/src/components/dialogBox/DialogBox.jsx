@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DialogBox.css"
+import "./DialogBox.css";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -56,69 +56,112 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-const DialogBox = ({ isOpen }) => {
+const DialogBox = ({ isOpen, type }) => {
   const [open, setOpen] = useState(isOpen);
   const handleClose = () => {
     setOpen(false);
   };
-  return (
-    <div>
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Your Day
-        </DialogTitle>
-        <DialogContent dividers>
-          <h4>Time Table</h4>
-          <table>
-            <tr>
-              <th>Time</th>
-              <th>Subject</th>
-              <th>Teacher</th>
-            </tr>
-            <tr>
-              <td>11:00-12:00</td>
-              <td>Maths</td>
-              <td>D Sharma</td>
-            </tr>
-            <tr>
-              <td>11:00-12:00</td>
-              <td>Maths</td>
-              <td>D Sharma</td>
-            </tr>
-            <tr>
-              <td>11:00-12:00</td>
-              <td>Maths</td>
-              <td>D Sharma</td>
-            </tr>
-            <tr>
-              <td>11:00-12:00</td>
-              <td>Maths</td>
-              <td>D Sharma</td>
-            </tr>
-            <tr>
-              <td>11:00-12:00</td>
-              <td>Maths</td>
-              <td>D Sharma</td>
-            </tr>
-          </table>
-          <h4>Assignments</h4>
+  if (type === "student") {
+    return (
+      <div>
+        <Dialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+        >
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Your Day
+          </DialogTitle>
+          <DialogContent dividers>
+            <h4>Time Table</h4>
+            <table>
+              <tr>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths</td>
+                <td>D Sharma</td>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths</td>
+                <td>D Sharma</td>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths</td>
+                <td>D Sharma</td>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths</td>
+                <td>D Sharma</td>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths</td>
+                <td>D Sharma</td>
+              </tr>
+            </table>
+            <h4>Assignments</h4>
             <ul>
               <li>Maths</li>
               <li>Science</li>
             </ul>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Save changes
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} color="primary">
+              Save changes
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  } else if(type==="teacher") {
+    return (
+      <div>
+        <Dialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+        >
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Your Day
+          </DialogTitle>
+          <DialogContent dividers>
+            <h4>Time Table</h4>
+            <table>
+              <tr>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Branch</th>
+              </tr>
+              <tr>
+                <td>11:00-12:00</td>
+                <td>Maths I</td>
+                <td>Mechanical</td>
+              </tr>
+              <tr>
+                <td>12:00-1:00</td>
+                <td>Maths II</td>
+                <td>Civil</td>
+              </tr>
+              <tr>
+              </tr>
+            </table>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose} color="primary">
+              Add Class 
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  } 
 };
 
 export default DialogBox;

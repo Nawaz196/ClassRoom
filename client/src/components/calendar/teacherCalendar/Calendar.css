@@ -1,0 +1,40 @@
+.calendarPage{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(224, 224, 240);
+}
+
+.monthContainer{
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:flex-start;
+    width: 92%;
+}
+
+.monthSelect{
+    padding: 8px;
+    font-size: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(206, 206, 241) ;
+    outline: none;
+    border-style: none;
+    text-align: center;
+}
+
+.calendarIcon{
+    margin-right: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.calendarPage select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+  }
