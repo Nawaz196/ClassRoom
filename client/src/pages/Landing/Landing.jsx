@@ -1,6 +1,7 @@
 import React from "react";
 import "./Landing.css";
 import { Link } from "react-router-dom";
+import student from "../../Assets/student.png"
 
 function Landing() {
   return (
@@ -16,7 +17,7 @@ function Landing() {
       <div className="containerBox">
         <img
           className="containerBoxImage"
-          src="https://cdn.imgbin.com/6/12/8/imgbin-student-hello-boy-carries-the-package-wzLVkK5nwnvBiNtuRmr52sr6e.jpg"
+          src={student}
           alt=""
         />
         <button className="landingPageButton"> <Link className="landingPageLink" to = "/studentsignin">For Students</Link> </button>
