@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const { MONGO_URI } = require("./config/keys");
 const authRoute = require("./Routes/auth");
+const subjectRoute= require('./Routes/subject')
 const cors = require("cors");
 
 mongoose
@@ -17,6 +18,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
+app.use("/api", subjectRoute);
 
 app.listen(9000, () => {
   console.log("backend server is running!");

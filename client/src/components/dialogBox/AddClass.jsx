@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import MuiDialogActions from "@material-ui/core/DialogActions";
+import { BsPlusCircle } from "react-icons/bs";
 
 const styles = (theme) => ({
   root: {
@@ -57,14 +58,21 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const AddClass = () => {
-  const presentTime = new Date().getHours().toString() + ":" + new Date().getMinutes().toString();
-  const futureTime = (new Date().getHours()+1).toString() + ":" + new Date().getMinutes().toString();
-  console.log(presentTime); 
+  const presentTime =
+    new Date().getHours().toString() + ":" + new Date().getMinutes().toString();
+  const futureTime =
+    (new Date().getHours() + 1).toString() +
+    ":" +
+    new Date().getMinutes().toString();
   const [open, setOpen] = useState(false);
   const [branch, setBranch] = useState("");
   const [subject, setSubject] = useState("");
+  const [day, setDay] = useState("");
   const [startTime, setStartTime] = useState(presentTime);
   const [endTime, setEndTime] = useState(futureTime);
+  const [isWeekly, setIsWeekly] = useState(false);
+  const [lectures, setLectures] = useState([]);
+  const [date, setDate] = useState(new Date().toLocaleDateString())
   const handleClose = () => {
     setOpen(false);
   };
@@ -74,8 +82,20 @@ const AddClass = () => {
     setOpen(true);
   };
 
-  console.log(endTime);
+  const addDay = (e) => {
+    e.preventDefault();
+    const item = {
+      day: day,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    setLectures([...lectures, item]);
+    setDay("");
+    setStartTime(presentTime);
+    setEndTime(futureTime);
+  };
 
+  console.log(isWeekly);
   return (
     <div>
       <button onClick={handleOpen} className="addButton redbutton">
@@ -90,7 +110,75 @@ const AddClass = () => {
           Schedule Lecture
         </DialogTitle>
         <DialogContent dividers>
-          <form action="">
+          <form action="" className="addClassForm">
+            <div>
+              <label>Weekly Classes ?</label>
+              <input
+                type="checkbox"
+                value={isWeekly}
+                onChange={() => setIsWeekly(!isWeekly)}
+              />
+            </div>
+            {isWeekly ? (
+              <div>
+                <h4>Weekly bitches</h4>
+                {lectures.map((item) => {
+                  return (
+                    <p>
+                      {item.day} - {item.startTime} - {item.endTime}
+                    </p>
+                  );
+                })}
+                <div className="day-time-classes">
+                  <input
+                    type="text"
+                    className="day"
+                    placeholder="Day"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                  />
+                  <input
+                    className="smallInputFields"
+                    value={startTime}
+                    onChange={(e) => {
+                      setStartTime(e.target.value);
+                    }}
+                    type="time"
+                  />
+                  <input
+                    className="smallInputFields"
+                    value={endTime}
+                    onChange={(e) => {
+                      setEndTime(e.target.value);
+                    }}
+                    type="time"
+                  />
+                  <BsPlusCircle className="icon" onClick={addDay} />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h4>No Weekly bitches</h4>
+                <label>Date </label>
+                <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} />
+                <input
+                  className="smallInputFields"
+                  value={startTime}
+                  onChange={(e) => {
+                    setStartTime(e.target.value);
+                  }}
+                  type="time"
+                />
+                <input
+                  className="smallInputFields"
+                  value={endTime}
+                  onChange={(e) => {
+                    setEndTime(e.target.value);
+                  }}
+                  type="time"
+                />
+              </div>
+            )}
             <select
               className="selectInputFields"
               value={branch}
@@ -111,23 +199,6 @@ const AddClass = () => {
               onChange={(e) => {
                 setSubject(e.target.value);
               }}
-            />
-            <h4>Timing</h4>
-            <input
-              className="inputFields"
-              value={startTime}
-              onChange={(e) => {
-                setStartTime(e.target.value);
-              }}
-              type="time"
-            />
-            <input
-              className="inputFields"
-              value={endTime}
-              onChange={(e) => {
-                setEndTime(e.target.value);
-              }}
-              type="time"
             />
           </form>
         </DialogContent>
