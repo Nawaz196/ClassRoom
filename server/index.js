@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { MONGO_URI } = require("./config/keys");
 const authRoute = require("./Routes/auth");
 const subjectRoute= require('./Routes/subject')
+const lectureRoute= require('./Routes/lecture')
 const cors = require("cors");
 
 mongoose

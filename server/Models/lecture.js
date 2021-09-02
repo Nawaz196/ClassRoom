@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 const lectureSchema = new mongoose.Schema({
-    subjectName : {
-        type : String,
-        required : true,
+    subjectId : {
+        type : ObjectId,
+        ref:"Subject"
     },
     teacherId : {
         type : ObjectId,
         ref:"Teacher"
     },
-    ClassId : {
-        type : ObjectId,
-        ref:"Class"
+    branchName : {
+        type : String,
+        required:true
     },
 }) 
 
-mongoose.model("Lecture",lectureSchema)
+module.exports = mongoose.model("Lecture",lectureSchema)
