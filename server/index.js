@@ -20,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api", subjectRoute);
+app.use("/api", lectureRoute)
 
 app.listen(9000, () => {
   console.log("backend server is running!");

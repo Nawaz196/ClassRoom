@@ -13,6 +13,9 @@ const lectureSchema = new mongoose.Schema({
         type : String,
         required:true
     },
+    lectures : {
+        type: Array,
+    }
 }) 
 
 module.exports = mongoose.model("Lecture",lectureSchema)

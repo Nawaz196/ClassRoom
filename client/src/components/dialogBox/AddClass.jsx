@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./DialogBox.css";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -10,6 +10,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import { BsPlusCircle } from "react-icons/bs";
+import axios from "axios";
+import { UserContext } from "../../App";
 
 const styles = (theme) => ({
   root: {
@@ -65,6 +67,7 @@ const AddClass = () => {
     ":" +
     new Date().getMinutes().toString();
   const [open, setOpen] = useState(false);
+  const { state } = useContext(UserContext);
   const [branch, setBranch] = useState("");
   const [subject, setSubject] = useState("");
   const [day, setDay] = useState("");
@@ -72,7 +75,8 @@ const AddClass = () => {
   const [endTime, setEndTime] = useState(futureTime);
   const [isWeekly, setIsWeekly] = useState(false);
   const [lectures, setLectures] = useState([]);
-  const [date, setDate] = useState(new Date().toLocaleDateString())
+  const [allSubjects, setAllSubjects] = useState([]);
+  const [date, setDate] = useState(new Date().toLocaleDateString());
   const handleClose = () => {
     setOpen(false);
   };
@@ -82,8 +86,7 @@ const AddClass = () => {
     setOpen(true);
   };
 
-  const addDay = (e) => {
-    e.preventDefault();
+  const addDay = () => {
     const item = {
       day: day,
       startTime: startTime,
@@ -95,7 +98,39 @@ const AddClass = () => {
     setEndTime(futureTime);
   };
 
-  console.log(isWeekly);
+  const uploadData = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/api/weeklyclasses", {
+        teacherId: state._id,
+        subjectId: subject,
+        lectures: lectures,
+        branch: branch,
+      });
+      console.log(res);
+      setLectures([]);
+      setDay("");
+      setBranch("");
+      setSubject("");
+      setStartTime(presentTime);
+      setEndTime(futureTime);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const getAllSubjects = async () => {
+      try {
+        const res = await axios.get("/api/getallsubjects");
+        console.log(res.data.subjects);
+        setAllSubjects(res.data.subjects);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAllSubjects();
+  }, []);
   return (
     <div>
       <button onClick={handleOpen} className="addButton redbutton">
@@ -153,14 +188,18 @@ const AddClass = () => {
                     }}
                     type="time"
                   />
-                  <BsPlusCircle className="icon" onClick={addDay} />
+                  <BsPlusCircle className="icon" onClick={() => addDay()} />
                 </div>
               </div>
             ) : (
               <div>
                 <h4>No Weekly bitches</h4>
                 <label>Date </label>
-                <input type="date" value={date} onChange={(e)=>setDate(e.target.value)} />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
                 <input
                   className="smallInputFields"
                   value={startTime}
@@ -191,7 +230,7 @@ const AddClass = () => {
               <option value="CE">CE</option>
               <option value="IT">IT</option>
             </select>
-            <input
+            {/* <input
               className="inputFields"
               type="text"
               value={subject}
@@ -199,11 +238,27 @@ const AddClass = () => {
               onChange={(e) => {
                 setSubject(e.target.value);
               }}
-            />
+            /> */}
+            <select
+              className="selectInputFields"
+              value={subject}
+              onChange={(e) => {
+                setSubject(e.target.value);
+              }}
+            >
+              <option value="">Select Subject</option>
+              {allSubjects.map((subject) => (
+                <option value={subject._id}>{subject.subjectName}</option>
+              ))}
+            </select>
           </form>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button
+            autoFocus
+            onClick={uploadData}
+            color="primary"
+          >
             Add Class
           </Button>
         </DialogActions>
