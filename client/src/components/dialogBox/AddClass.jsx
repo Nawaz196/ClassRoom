@@ -26,8 +26,6 @@ const styles = (theme) => ({
   },
 });
 
-// const [presentYear, setPresentYear] = useState(new Date().getFullYear())
-
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
@@ -74,9 +72,10 @@ const AddClass = () => {
   const [startTime, setStartTime] = useState(presentTime);
   const [endTime, setEndTime] = useState(futureTime);
   const [isWeekly, setIsWeekly] = useState(false);
-  const [lectures, setLectures] = useState([]);
+  const [weeklyLectures, setWeeklyLectures] = useState([]);
+  const [datedLectures, setDatedLectures] = useState([]);
   const [allSubjects, setAllSubjects] = useState([]);
-  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [date, setDate] = useState("");
   const handleClose = () => {
     setOpen(false);
   };
@@ -88,28 +87,36 @@ const AddClass = () => {
 
   const addDay = () => {
     const item = {
+      date: date,
       day: day,
       startTime: startTime,
       endTime: endTime,
     };
-    setLectures([...lectures, item]);
+    if (isWeekly) {
+      setWeeklyLectures([...weeklyLectures, item]);
+    } else {
+      setDatedLectures([...datedLectures, item]);
+    }
     setDay("");
+    setDate("");
     setStartTime(presentTime);
     setEndTime(futureTime);
   };
+  console.log(weeklyLectures);
 
-  const uploadData = async (e) => {
-    e.preventDefault();
+  const uploadData = async (lect) => {
     try {
       const res = await axios.post("/api/weeklyclasses", {
         teacherId: state._id,
         subjectId: subject,
-        lectures: lectures,
+        lectures: lect,
         branch: branch,
       });
       console.log(res);
-      setLectures([]);
+      setWeeklyLectures([]);
+      setDatedLectures([]);
       setDay("");
+      setDate("");
       setBranch("");
       setSubject("");
       setStartTime(presentTime);
@@ -117,13 +124,13 @@ const AddClass = () => {
     } catch (err) {
       console.log(err);
     }
+    window.location.reload();
   };
 
   useEffect(() => {
     const getAllSubjects = async () => {
       try {
         const res = await axios.get("/api/getallsubjects");
-        console.log(res.data.subjects);
         setAllSubjects(res.data.subjects);
       } catch (err) {
         console.log(err);
@@ -157,7 +164,7 @@ const AddClass = () => {
             {isWeekly ? (
               <div>
                 <h4>Weekly bitches</h4>
-                {lectures.map((item) => {
+                {weeklyLectures.map((item) => {
                   return (
                     <p>
                       {item.day} - {item.startTime} - {item.endTime}
@@ -194,28 +201,40 @@ const AddClass = () => {
             ) : (
               <div>
                 <h4>No Weekly bitches</h4>
-                <label>Date </label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                />
-                <input
-                  className="smallInputFields"
-                  value={startTime}
-                  onChange={(e) => {
-                    setStartTime(e.target.value);
-                  }}
-                  type="time"
-                />
-                <input
-                  className="smallInputFields"
-                  value={endTime}
-                  onChange={(e) => {
-                    setEndTime(e.target.value);
-                  }}
-                  type="time"
-                />
+                {datedLectures.map((item) => {
+                  return (
+                    <p>
+                      <b>Date</b> : {item.date} &nbsp; <b>Timings</b> :{" "}
+                      {item.startTime} - {item.endTime}
+                    </p>
+                  );
+                })}
+
+                <div>
+                  <label>Date </label>
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                  <input
+                    className="smallInputFields"
+                    value={startTime}
+                    onChange={(e) => {
+                      setStartTime(e.target.value);
+                    }}
+                    type="time"
+                  />
+                  <input
+                    className="smallInputFields"
+                    value={endTime}
+                    onChange={(e) => {
+                      setEndTime(e.target.value);
+                    }}
+                    type="time"
+                  />
+                  <BsPlusCircle className="icon" onClick={() => addDay()} />
+                </div>
               </div>
             )}
             <select
@@ -230,15 +249,6 @@ const AddClass = () => {
               <option value="CE">CE</option>
               <option value="IT">IT</option>
             </select>
-            {/* <input
-              className="inputFields"
-              type="text"
-              value={subject}
-              placeholder="Subject"
-              onChange={(e) => {
-                setSubject(e.target.value);
-              }}
-            /> */}
             <select
               className="selectInputFields"
               value={subject}
@@ -256,7 +266,9 @@ const AddClass = () => {
         <DialogActions>
           <Button
             autoFocus
-            onClick={uploadData}
+            onClick={() => {
+              isWeekly ? uploadData(weeklyLectures) : uploadData(datedLectures);
+            }}
             color="primary"
           >
             Add Class

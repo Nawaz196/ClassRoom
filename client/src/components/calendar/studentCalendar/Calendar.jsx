@@ -1,16 +1,38 @@
-import React, { useState} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ToastContainer } from "react-toastify";
 import DateCard from "../../dateCard/DateCard";
 import "./Calendar.css";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
-import DaysCard from "../../daysCard/DaysCard"
-
+import DaysCard from "../../daysCard/DaysCard";
+import axios from "axios";
+import { UserContext } from "../../../App";
 
 const Calendar = () => {
   const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
+  const [lectures, setLectures] = useState([]);
+
+  const userId = JSON.parse(localStorage.getItem("suser"))._id;
+
+
+  useEffect(() => {
+    const getLectures = async () => {
+      try {
+        const res = await axios.post("/api/getlectures", {
+            studentId: userId
+        });
+        console.log(res);
+        // setLectures(res.data);
+        // console.log(lectures);
+        // setAllSubjects(res.data.subjects);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+   getLectures();
+  }, []);
+
   function getDay(K, M, D, C) {
-    console.log(M, D);
     let twelve = 12;
     if (Number(M) === 1 || Number(M) === 2) {
       M = Number(M) + Number(twelve);
@@ -68,110 +90,105 @@ const Calendar = () => {
     { no: 12, name: "December" },
   ];
 
-  const years=[];
-  for(let i=2020;i<=2030;i++){
-    years.push(i)
+  const years = [];
+  for (let i = 2020; i <= 2030; i++) {
+    years.push(i);
   }
-    return (
-      <div className="calendarPage">
-        <div
-          style={{ width: "500px", display: "flex", justifyContent: "center" }}
-        >
-          <div>
-            <BsChevronLeft
-              className="calendarIcon"
-              onClick={(e) => {
-                selectMonth > 1
-                  ? setSelectMonth(selectMonth - 1)
-                  : setSelectMonth(1);
-              }}
-            />
-            <select
-              className="monthSelect"
-              value={selectMonth}
-              onChange={(e) => {
-                setSelectMonth(e.target.value);
-              }}
-            >
-              <option value="">Choose Month</option>
-              {months.map((month)=>{
-                return(
-                  <option value={month.no}>{month.name}</option>
-                )
-              })}
-            </select>
-            <BsChevronRight
-              className="calendarIcon"
-              onClick={(e) => {
-                selectMonth < 12
-                  ? setSelectMonth(selectMonth + 1)
-                  : setSelectMonth(12);
-              }}
-            />
-          </div>
-          <div>
-            <BsChevronLeft
-              className="calendarIcon"
-              onClick={(e) => {
-                selectYear > 2021
-                  ? setSelectYear(selectYear - 1)
-                  : setSelectYear(2021);
-              }}
-            />
-            <select
-              className="monthSelect"
-              value={selectYear}
-              onChange={(e) => {
-                setSelectYear(e.target.value);
-              }}
-            >
-              <option value="">Choose Year</option>
-              {years.map((y)=>{
-                return(
-                  <option value={y}>{y}</option>
-                )
-              })}
-              
-            </select>
-            <BsChevronRight
-              className="calendarIcon"
-              onClick={(e) => {
-                selectYear < 2025
-                  ? setSelectYear(selectYear + 1)
-                  : setSelectYear(2025);
-              }}
-            />
-          </div>
+  return (
+    <div className="calendarPage">
+      <div
+        style={{ width: "500px", display: "flex", justifyContent: "center" }}
+      >
+        <div>
+          <BsChevronLeft
+            className="calendarIcon"
+            onClick={(e) => {
+              selectMonth > 1
+                ? setSelectMonth(selectMonth - 1)
+                : setSelectMonth(1);
+            }}
+          />
+          <select
+            className="monthSelect"
+            value={selectMonth}
+            onChange={(e) => {
+              setSelectMonth(e.target.value);
+            }}
+          >
+            <option value="">Choose Month</option>
+            {months.map((month) => {
+              return <option value={month.no}>{month.name}</option>;
+            })}
+          </select>
+          <BsChevronRight
+            className="calendarIcon"
+            onClick={(e) => {
+              selectMonth < 12
+                ? setSelectMonth(selectMonth + 1)
+                : setSelectMonth(12);
+            }}
+          />
         </div>
-  
-        <div className="monthContainer">
-          {day.map((e) => {
-            return <DaysCard day={e} />;
-          })}
+        <div>
+          <BsChevronLeft
+            className="calendarIcon"
+            onClick={(e) => {
+              selectYear > 2021
+                ? setSelectYear(selectYear - 1)
+                : setSelectYear(2021);
+            }}
+          />
+          <select
+            className="monthSelect"
+            value={selectYear}
+            onChange={(e) => {
+              setSelectYear(e.target.value);
+            }}
+          >
+            <option value="">Choose Year</option>
+            {years.map((y) => {
+              return <option value={y}>{y}</option>;
+            })}
+          </select>
+          <BsChevronRight
+            className="calendarIcon"
+            onClick={(e) => {
+              selectYear < 2025
+                ? setSelectYear(selectYear + 1)
+                : setSelectYear(2025);
+            }}
+          />
         </div>
-  
-        <div className="monthContainer">
-          {array.map((e) => {
-            return <DateCard month="" date="" />;
-          })}
-          {arr.map((e) => {
-            return <DateCard month={selectMonth} date={e} isStudent={true} />;
-          })}
-        </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </div>
-    );
-  
+
+      <div className="monthContainer">
+        {day.map((e) => {
+          return <DaysCard day={e} />;
+        })}
+      </div>
+
+      <div className="monthContainer">
+        {array.map((e) => {
+          return <DateCard month="" date="" />;
+        })}
+        {arr.map((e) => {
+          return <DateCard month={selectMonth} date={e} isStudent={true} />;
+        })}
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
+    </div>
+  );
 };
 
 export default Calendar;
