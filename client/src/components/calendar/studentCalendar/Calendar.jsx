@@ -10,27 +10,84 @@ import { UserContext } from "../../../App";
 const Calendar = () => {
   const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
-  const [lectures, setLectures] = useState([]);
+  const [dataLectures, setDataLectures] = useState([]);
+  const [mon, setMon] = useState([]);
+  const [tue, setTue] = useState([]);
+  const [wed, setWed] = useState([]);
+  const [thu, setThu] = useState([]);
+  const [fri, setFri] = useState([]);
+  const [sat, setSat] = useState([]);
+  const [timeTable, setTimeTable] = useState(null);
 
   const userId = JSON.parse(localStorage.getItem("suser"))._id;
-
 
   useEffect(() => {
     const getLectures = async () => {
       try {
         const res = await axios.post("/api/getlectures", {
-            studentId: userId
+          studentId: userId,
         });
-        console.log(res);
-        // setLectures(res.data);
-        // console.log(lectures);
-        // setAllSubjects(res.data.subjects);
+        //console.log(res);
+        setDataLectures(res.data);
+
+        res.data.map((item) => {
+          const subjectName = item.subjectId.subjectName;
+          const teacherName = item.teacherId.name;
+
+          item.lectures.map((doc) => {
+            const presentDay = doc.day;
+            const lect = {
+              day: presentDay,
+              subjectName: subjectName,
+              teacherName: teacherName,
+              startTime: doc.startTime,
+              endTime: doc.endTime,
+            };
+            //console.log(lect);
+
+            switch (presentDay) {
+              case "Monday":
+                setMon([...mon, lect]);
+                break;
+              case "Tuesday":
+                setTue([...tue, lect]);
+                break;
+              case "Wednesday":
+                setWed([...wed, lect]);
+                break;
+              case "Thursday":
+                setThu([...thu, lect]);
+                break;
+              case "Friday":
+                setFri([...fri, lect]);
+                break;
+              case "Saturday":
+                setSat([...sat, lect]);
+                break;
+            }
+          });
+        });
       } catch (err) {
         console.log(err);
       }
+
+      console.log(thu);
+
+      const lavde = {
+        Monday: mon,
+        Tuesday: tue,
+        Wednesday: wed,
+        Thursday: thu,
+        Friday: fri,
+        Saturday: sat,
+      };
+      //console.log(lavde);
+      setTimeTable(lavde);
     };
-   getLectures();
+    getLectures();
   }, []);
+
+  console.log(timeTable);
 
   function getDay(K, M, D, C) {
     let twelve = 12;
@@ -186,7 +243,6 @@ const Calendar = () => {
         draggable
         pauseOnHover
       />
-      
     </div>
   );
 };
