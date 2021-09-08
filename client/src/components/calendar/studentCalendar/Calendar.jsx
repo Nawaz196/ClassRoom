@@ -4,73 +4,67 @@ import DateCard from "../../dateCard/DateCard";
 import "./Calendar.css";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import DaysCard from "../../daysCard/DaysCard";
-import axios from "axios";
-import { UserContext } from "../../../App";
+import {TimeTableContext} from "../../../context/timeTable/timeTableContext"
+import { getTimeTable } from "../../../context/timeTable/apiCalls";
 
 const Calendar = () => {
   const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
-  const [dataLectures, setDataLectures] = useState([]);
-  const [mon, setMon] = useState([]);
-  const [tue, setTue] = useState([]);
-  const [wed, setWed] = useState([]);
-  const [thu, setThu] = useState([]);
-  const [fri, setFri] = useState([]);
-  const [sat, setSat] = useState([]);
-  const [timeTable, setTimeTable] = useState(null);
+  const {timeTable, dispatch} = useContext(TimeTableContext);
   const [trigger, setTrigger] = useState(false);
-  const userId = JSON.parse(localStorage.getItem("suser"))._id;
+  // console.log(timeTable);
 
   useEffect(async () => {
-    const res = await axios.post("/api/getlectures", {
-      studentId: userId,
-    });
-    //console.log(res);
-    setDataLectures(res.data);
+   await getTimeTable(dispatch);
     setTrigger(true);
-  }, []);
+  }, [dispatch]);
+
 
   useEffect(() => {
     list_values();
-  }, [trigger]);
+  },[trigger])
+
 
   const list_values = () => {
-    dataLectures.map((item) => {
+    timeTable.map((item) => {
+      // console.log(item);
       let subject_name = item.subjectId.subjectName;
       let teacher_name = item.teacherId.name;
 
-      item.lectures.map((doc) => {
-        let present_day = doc.day;
-        let start_time = doc.startTime;
-        let end_time = doc.endTime;
-        let lect = {
-          day: present_day,
-          startTime: start_time,
-          endTime: end_time,
-          subjectName: subject_name,
-          teacherName: teacher_name,
-        };
-        switch (present_day) {
-          case "Monday":
-            setMon([...mon, lect]);
-            break;
-          case "Tuesday":
-            setTue([...tue, lect]);
-            break;
-          case "Wednesday":
-            setWed([...wed, lect]);
-            break;
-          case "Thursday":
-            setThu([...thu, lect]);
-            break;
-          case "Friday":
-            setFri([...fri, lect]);
-            break;
-          case "Saturday":
-            setSat([...sat, lect]);
-            break;
-        }
-      });
+      console.log(subject_name,teacher_name)
+      // item.lectures.map((doc) => {
+      //   let present_day = doc.day;
+      //   let start_time = doc.startTime;
+      //   let end_time = doc.endTime;
+      //   let lect = {
+      //     day: present_day,
+      //     startTime: start_time,
+      //     endTime: end_time,
+      //     subjectName: subject_name,
+      //     teacherName: teacher_name,
+      //   };
+      //   switch (present_day) {
+      //     case "Monday":
+      //       setMon([...mon, lect]);
+      //       break;
+      //     case "Tuesday":
+      //       setTue([...tue, lect]);
+      //       break;
+      //     case "Wednesday":
+      //       setWed([...wed, lect]);
+      //       break;
+      //     case "Thursday":
+      //       setThu([...thu, lect]);
+      //       break;
+      //     case "Friday":
+      //       setFri([...fri, lect]);
+      //       break;
+      //     case "Saturday":
+      //       setSat([...sat, lect]);
+      //       break;
+      //     default : 
+      //   }
+      // });
     });
   };
 
@@ -80,6 +74,8 @@ const Calendar = () => {
   // console.log(thu);
   // console.log(fri);
   // console.log(sat);
+
+ 
 
   function getDay(K, M, D, C) {
     let twelve = 12;
