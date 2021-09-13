@@ -6,74 +6,51 @@ import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import DaysCard from "../../daysCard/DaysCard";
 import {TimeTableContext} from "../../../context/timeTable/timeTableContext"
 import { getTimeTable } from "../../../context/timeTable/apiCalls";
+import axios from "axios"
 
 const Calendar = () => {
   const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
-  const {timeTable, dispatch} = useContext(TimeTableContext);
-  const [trigger, setTrigger] = useState(false);
+  // const {timeTable, dispatch} = useContext(TimeTableContext);
+  // const [trigger, setTrigger] = useState(false);
+  const [Tuesday, setTuesday] = useState([])
+  const userId = JSON.parse(localStorage.getItem("suser"))._id;
   // console.log(timeTable);
 
-  useEffect(async () => {
-   await getTimeTable(dispatch);
-    setTrigger(true);
-  }, [dispatch]);
+  // useEffect(async () => {
+  //  await getTimeTable(dispatch);
+  //   setTrigger(true);
+  // }, [dispatch]);
 
+  // useEffect(() => {
+  //   list_values();
+  // },[trigger])
 
   useEffect(() => {
-    list_values();
-  },[trigger])
+    const getMondayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+         studentId: userId,
+         requiredDay: "Tuesday"
+      })
+      setTuesday(res.data);
+    }
+    getMondayLectures();
+  },[])
+  console.log(Tuesday);
 
+  // const list_values = () => {
+  //   timeTable.map((item) => {
+  //     // console.log(item);
+  //     let subject_name = item.subjectId.subjectName;
+  //     let teacher_name = item.teacherId.name;
 
-  const list_values = () => {
-    timeTable.map((item) => {
-      // console.log(item);
-      let subject_name = item.subjectId.subjectName;
-      let teacher_name = item.teacherId.name;
+  //     console.log(subject_name,teacher_name)
 
-      console.log(subject_name,teacher_name)
-      // item.lectures.map((doc) => {
-      //   let present_day = doc.day;
-      //   let start_time = doc.startTime;
-      //   let end_time = doc.endTime;
-      //   let lect = {
-      //     day: present_day,
-      //     startTime: start_time,
-      //     endTime: end_time,
-      //     subjectName: subject_name,
-      //     teacherName: teacher_name,
-      //   };
-      //   switch (present_day) {
-      //     case "Monday":
-      //       setMon([...mon, lect]);
-      //       break;
-      //     case "Tuesday":
-      //       setTue([...tue, lect]);
-      //       break;
-      //     case "Wednesday":
-      //       setWed([...wed, lect]);
-      //       break;
-      //     case "Thursday":
-      //       setThu([...thu, lect]);
-      //       break;
-      //     case "Friday":
-      //       setFri([...fri, lect]);
-      //       break;
-      //     case "Saturday":
-      //       setSat([...sat, lect]);
-      //       break;
-      //     default : 
-      //   }
-      // });
-    });
-  };
+  //     //   }
+  //     // });
+  //   });
+  // };
 
-  // console.log(mon);
-  // console.log(tue);
-  // console.log(wed);
-  // console.log(thu);
-  // console.log(fri);
-  // console.log(sat);
 
  
 

@@ -11,9 +11,9 @@ function DateCard({ month, date, isStudent, val }) {
   const presentMonth = new Date().getMonth() + 1;
   const [dialogOpen, setDialogOpen] = useState(false);
   const {timeTable, dispatch} = useContext(TimeTableContext);
-  useEffect(() => {
-    getTimeTable(dispatch);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   getTimeTable(dispatch);
+  // }, [dispatch]);
  
   const handleClick = (e) => {
     e.preventDefault();

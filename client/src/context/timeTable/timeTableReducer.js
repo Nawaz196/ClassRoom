@@ -2,7 +2,7 @@ const timeTableReducer = (state,action) => {
     switch(action.type) {
         case "GET_TIMETABLE_START" : 
         return {
-            timeTable : [],
+            timeTable : {},
             isFetching: true,
             error: false,
         }
@@ -14,7 +14,7 @@ const timeTableReducer = (state,action) => {
           }
         case "GET_TIMETABLE_FAILURE" : 
         return {
-            timeTable: [],
+            timeTable: {},
             isFetching: false,
             error: true,
         }

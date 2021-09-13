@@ -2,7 +2,14 @@ import timeTableReducer from "./timeTableReducer";
 import { createContext, useReducer } from "react";
 
 const INITIAL_STATE = {
-  timeTable: [],
+  timeTable: {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+  },
   isFetching: false,
   error: false,
 };

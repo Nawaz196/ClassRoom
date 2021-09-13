@@ -66,21 +66,42 @@ router.post("/weeklyclasses", (req, res) => {
 });
 
 router.post("/getlectures", (req, res) => {
-  const { studentId } = req.body;
+  const { studentId,requiredDay } = req.body;
   Student.findById(studentId)
     .populate({
       path: "lectures", // populate lectures
+      match: { lectures: { $elemMatch: { day: requiredDay } } },
       populate: {
-         path: "teacherId subjectId" // in lectures, populate teachers and subjects
-      }
+        path: "teacherId subjectId", // in lectures, populate teachers and subjects
+        select: { subjectName: 1, name: 1 },
+      },
     })
     .exec((err, doc) => {
       if (err) {
         console.log(err);
       } else {
-        return res.status(200).json(doc.lectures);
+        let lectureData = [];
+        doc.lectures.forEach(element => {
+          element.lectures = element.lectures.filter(lecture => lecture.day === requiredDay);
+          lectureData.push(element)
+        });
+        // console.log(lectureData);
+        return res.status(200).json(lectureData);
       }
     });
 });
+
+// router.post("/getlectures", (req, res) => {
+//   const { studentId, requiredDay } = req.body;
+//   Lecture.find({ lectures: { $elemMatch: { day: requiredDay } } }).exec(
+//     (err, doc) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         return res.status(200).json(doc);
+//       }
+//     }
+//   );
+// });
 
 module.exports = router;
