@@ -56,8 +56,9 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-const DialogBox = ({ isOpen, type }) => {
+const DialogBox = ({ isOpen, type, tt_day }) => {
   const [open, setOpen] = useState(isOpen);
+  console.log(tt_day);
   const handleClose = () => {
     setOpen(false);
   };
@@ -80,31 +81,24 @@ const DialogBox = ({ isOpen, type }) => {
                 <th>Subject</th>
                 <th>Teacher</th>
               </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths</td>
-                <td>D Sharma</td>
-              </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths</td>
-                <td>D Sharma</td>
-              </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths</td>
-                <td>D Sharma</td>
-              </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths</td>
-                <td>D Sharma</td>
-              </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths</td>
-                <td>D Sharma</td>
-              </tr>
+              {tt_day.map((item) => {
+                let subName = item.subjectId.subjectName;
+                let teacherName = item.teacherId.name;
+
+                let startTime = item.lectures[0].startTime;
+                let endTime = item.lectures[0].endTime;
+                //console.log(subName, teacherName, startTime, endTime);
+
+                return (
+                  <tr>
+                    <td>
+                      {startTime} - {endTime}
+                    </td>
+                    <td>{subName}</td>
+                    <td>{teacherName}</td>
+                  </tr>
+                );
+              })}
             </table>
             <h4>Assignments</h4>
             <ul>
@@ -120,7 +114,7 @@ const DialogBox = ({ isOpen, type }) => {
         </Dialog>
       </div>
     );
-  } else if(type==="teacher") {
+  } else if (type === "teacher") {
     return (
       <div>
         <Dialog
@@ -149,19 +143,18 @@ const DialogBox = ({ isOpen, type }) => {
                 <td>Maths II</td>
                 <td>Civil</td>
               </tr>
-              <tr>
-              </tr>
+              <tr></tr>
             </table>
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleClose} color="primary">
-              Add Class 
+              Add Class
             </Button>
           </DialogActions>
         </Dialog>
       </div>
     );
-  } 
+  }
 };
 
 export default DialogBox;

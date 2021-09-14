@@ -9,16 +9,14 @@ function DateCard({ month, date, isStudent, val, tt_day, p_day }) {
   const presentMonth = new Date().getMonth() + 1;
   const [dialogOpen, setDialogOpen] = useState(false);
 
-
-
-  let r ;
+  let r;
   if (date !== "" && date % 7 !== val) {
     r = (p_day + (date - 1)) % 7;
-    if (r == 0) r = 7;
-    console.log(r);
+    if (r === 0) r = 7;
+    //console.log(r);
   }
 
-  //console.log(p_day);
+  //console.log(tt_day);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -78,13 +76,14 @@ function DateCard({ month, date, isStudent, val, tt_day, p_day }) {
           )}
           <h5 style={{ color: "green" }}>
             <SiGoogleclassroom /> &nbsp;
-            {tt_day[r][1].length} Classes
+            {tt_day[r - 1][0].length} Classes
           </h5>
         </div>
         {dialogOpen && (
           <DialogBox
             type={isStudent ? "student" : "teacher"}
             isOpen={dialogOpen}
+            tt_day={tt_day[r - 1][0]}
           />
         )}
       </div>
