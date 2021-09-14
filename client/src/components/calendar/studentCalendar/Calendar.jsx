@@ -4,55 +4,94 @@ import DateCard from "../../dateCard/DateCard";
 import "./Calendar.css";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 import DaysCard from "../../daysCard/DaysCard";
-import {TimeTableContext} from "../../../context/timeTable/timeTableContext"
+import { TimeTableContext } from "../../../context/timeTable/timeTableContext";
 import { getTimeTable } from "../../../context/timeTable/apiCalls";
-import axios from "axios"
+import axios from "axios";
 
 const Calendar = () => {
   const [selectMonth, setSelectMonth] = useState(new Date().getMonth() + 1);
   const [selectYear, setSelectYear] = useState(new Date().getFullYear());
-  // const {timeTable, dispatch} = useContext(TimeTableContext);
-  // const [trigger, setTrigger] = useState(false);
-  const [Tuesday, setTuesday] = useState([])
+
   const userId = JSON.parse(localStorage.getItem("suser"))._id;
-  // console.log(timeTable);
-
-  // useEffect(async () => {
-  //  await getTimeTable(dispatch);
-  //   setTrigger(true);
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   list_values();
-  // },[trigger])
+  const [monday, setMonday] = useState([]);
+  const [tuesday, setTuesday] = useState([]);
+  const [wednesday, setWednesday] = useState([]);
+  const [thursday, setThursday] = useState([]);
+  const [friday, setFriday] = useState([]);
+  const [saturday, setSaturday] = useState([]);
+  const [sunday, setSunday] = useState([]);
 
   useEffect(() => {
     const getMondayLectures = async () => {
       const res = await axios.post("/api/getlectures", {
-         studentId: userId,
-         requiredDay: "Tuesday"
-      })
-      setTuesday(res.data);
-    }
+        studentId: userId,
+        requiredDay: "Monday",
+      });
+      setMonday(res.data);
+    };
     getMondayLectures();
-  },[])
-  console.log(Tuesday);
+  }, []);
+  //console.log(monday);
 
-  // const list_values = () => {
-  //   timeTable.map((item) => {
-  //     // console.log(item);
-  //     let subject_name = item.subjectId.subjectName;
-  //     let teacher_name = item.teacherId.name;
+  useEffect(() => {
+    const getTuesdayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+        studentId: userId,
+        requiredDay: "Tuesday",
+      });
+      setTuesday(res.data);
+    };
+    getTuesdayLectures();
+  }, []);
+  //console.log(tuesday);
 
-  //     console.log(subject_name,teacher_name)
+  useEffect(() => {
+    const getWednesdayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+        studentId: userId,
+        requiredDay: "Wednesday",
+      });
+      setWednesday(res.data);
+    };
+    getWednesdayLectures();
+  }, []);
+  //console.log(wednesday);
 
-  //     //   }
-  //     // });
-  //   });
-  // };
+  useEffect(() => {
+    const getThursdayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+        studentId: userId,
+        requiredDay: "Thursday",
+      });
+      setThursday(res.data);
+    };
+    getThursdayLectures();
+  }, []);
+  //console.log(thursday);
 
+  useEffect(() => {
+    const getFridayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+        studentId: userId,
+        requiredDay: "Friday",
+      });
+      setFriday(res.data);
+    };
+    getFridayLectures();
+  }, []);
+  //console.log(friday);
 
- 
+  useEffect(() => {
+    const getSaturdayLectures = async () => {
+      const res = await axios.post("/api/getlectures", {
+        studentId: userId,
+        requiredDay: "Saturday",
+      });
+      setSaturday(res.data);
+    };
+    getSaturdayLectures();
+  }, []);
+  //console.log(saturday);
 
   function getDay(K, M, D, C) {
     let twelve = 12;
@@ -83,6 +122,11 @@ const Calendar = () => {
     arr.push(i + 1);
   }
   let particular_day = getDay(1, selectMonth, selectYear % 100, 20);
+  let first_sunday = 7 - particular_day;
+  let first_sunday_date = 1 + first_sunday;
+  let value = first_sunday_date % 7;
+  console.log(particular_day);
+  // particular day == 3== wednesday
   let array = [];
   for (let i = 0; i < particular_day - 1; i++) {
     array.push(i + 1);
@@ -95,6 +139,15 @@ const Calendar = () => {
     "FRIDAY",
     "SATURDAY",
     "SUNDAY",
+  ];
+  const tt_day = [
+    [1, monday],
+    [2, tuesday],
+    [3, wednesday],
+    [4, thursday],
+    [5, friday],
+    [6, saturday],
+    [7, sunday],
   ];
 
   const months = [
@@ -194,7 +247,16 @@ const Calendar = () => {
           return <DateCard month="" date="" />;
         })}
         {arr.map((e) => {
-          return <DateCard month={selectMonth} date={e} isStudent={true} />;
+          return (
+            <DateCard
+              month={selectMonth}
+              date={e}
+              isStudent={true}
+              val={value}
+              p_day={particular_day}
+              tt_day={tt_day}
+            />
+          );
         })}
       </div>
       <ToastContainer

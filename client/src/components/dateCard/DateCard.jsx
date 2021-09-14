@@ -3,18 +3,23 @@ import { BsPencil } from "react-icons/bs";
 import { SiGoogleclassroom } from "react-icons/si";
 import "./DateCard.css";
 import DialogBox from "../dialogBox/DialogBox";
-import {TimeTableContext} from "../../context/timeTable/timeTableContext"
-import { getTimeTable } from "../../context/timeTable/apiCalls"
 
-function DateCard({ month, date, isStudent, val }) {
+function DateCard({ month, date, isStudent, val, tt_day, p_day }) {
   const presentDate = new Date().getDate();
   const presentMonth = new Date().getMonth() + 1;
   const [dialogOpen, setDialogOpen] = useState(false);
-  const {timeTable, dispatch} = useContext(TimeTableContext);
-  // useEffect(() => {
-  //   getTimeTable(dispatch);
-  // }, [dispatch]);
- 
+
+
+
+  let r ;
+  if (date !== "" && date % 7 !== val) {
+    r = (p_day + (date - 1)) % 7;
+    if (r == 0) r = 7;
+    console.log(r);
+  }
+
+  //console.log(p_day);
+
   const handleClick = (e) => {
     e.preventDefault();
     dialogOpen ? setDialogOpen(false) : setDialogOpen(true);
@@ -72,7 +77,8 @@ function DateCard({ month, date, isStudent, val }) {
             </h5>
           )}
           <h5 style={{ color: "green" }}>
-            <SiGoogleclassroom /> &nbsp;{timeTable.length} Classes
+            <SiGoogleclassroom /> &nbsp;
+            {tt_day[r][1].length} Classes
           </h5>
         </div>
         {dialogOpen && (
