@@ -133,17 +133,26 @@ const DialogBox = ({ isOpen, type, tt_day }) => {
                 <th>Subject</th>
                 <th>Branch</th>
               </tr>
-              <tr>
-                <td>11:00-12:00</td>
-                <td>Maths I</td>
-                <td>Mechanical</td>
-              </tr>
-              <tr>
-                <td>12:00-1:00</td>
-                <td>Maths II</td>
-                <td>Civil</td>
-              </tr>
-              <tr></tr>
+              {tt_day.map((item) => {
+                console.log(item);
+                let subName = item.subjectId.subjectName;
+                let teacherName = item.teacherId.name;
+                let branchName = item.branchName;
+
+                let startTime = item.lectures[0].startTime;
+                let endTime = item.lectures[0].endTime;
+                //console.log(subName, teacherName, startTime, endTime);
+
+                return (
+                  <tr>
+                    <td>
+                      {startTime} - {endTime}
+                    </td>
+                    <td>{subName}</td>
+                    <td>{branchName}</td>
+                  </tr>
+                );
+              })}
             </table>
           </DialogContent>
           <DialogActions>

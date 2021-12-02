@@ -66,7 +66,7 @@ router.post("/weeklyclasses", (req, res) => {
 });
 
 router.post("/getlectures", (req, res) => {
-  const { studentId,requiredDay } = req.body;
+  const { studentId, requiredDay } = req.body;
   Student.findById(studentId)
     .populate({
       path: "lectures", // populate lectures
@@ -81,9 +81,11 @@ router.post("/getlectures", (req, res) => {
         console.log(err);
       } else {
         let lectureData = [];
-        doc.lectures.forEach(element => {
-          element.lectures = element.lectures.filter(lecture => lecture.day === requiredDay);
-          lectureData.push(element)
+        doc.lectures.forEach((element) => {
+          element.lectures = element.lectures.filter(
+            (lecture) => lecture.day === requiredDay
+          );
+          lectureData.push(element);
         });
         // console.log(lectureData);
         return res.status(200).json(lectureData);
@@ -103,5 +105,33 @@ router.post("/getlectures", (req, res) => {
 //     }
 //   );
 // });
+
+router.post("/getteacherlectures", (req, res) => {
+  const { teacherId, requiredDay } = req.body;
+  Teacher.findById(teacherId)
+    .populate({
+      path: "lectures", // populate lectures
+      match: { lectures: { $elemMatch: { day: requiredDay } } },
+      populate: {
+        path: "subjectId", // in lectures, populate teachers and subjects
+        select: { subjectName: 1, name: 1 },
+      },
+    })
+    .exec((err, doc) => {
+      if (err) {
+        console.log(err);
+      } else {
+        let lectureData = [];
+        doc.lectures.forEach((element) => {
+          element.lectures = element.lectures.filter(
+            (lecture) => lecture.day === requiredDay
+          );
+          lectureData.push(element);
+        });
+        // console.log(lectureData);
+        return res.status(200).json(lectureData);
+      }
+    });
+});
 
 module.exports = router;

@@ -92,6 +92,7 @@ const AddClass = () => {
       startTime: startTime,
       endTime: endTime,
     };
+    console.log(item);
     if (isWeekly) {
       setWeeklyLectures([...weeklyLectures, item]);
     } else {
@@ -105,6 +106,7 @@ const AddClass = () => {
   console.log(weeklyLectures);
 
   const uploadData = async (lect) => {
+    console.log(lect);
     try {
       const res = await axios.post("/api/weeklyclasses", {
         teacherId: state._id,
