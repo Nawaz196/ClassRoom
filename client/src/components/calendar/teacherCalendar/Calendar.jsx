@@ -141,6 +141,7 @@ const Calendar = () => {
         requiredDay: "Friday",
       });
       setFriday(res.data);
+      console.log(res.data);
     };
     getFridayLectures();
   }, []);
